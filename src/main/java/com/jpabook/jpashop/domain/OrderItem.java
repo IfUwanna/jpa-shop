@@ -1,15 +1,14 @@
 package com.jpabook.jpashop.domain;
 
+import com.jpabook.jpashop.domain.item.Item;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
- * packageName    : com.jpabook.jpashop.domain;
- * fileName       : Member
+ * packageName    : com.jpabook.jpashop.domain
+ * fileName       : OrderItem
  * author         : Jihun Park
  * date           : 2022/03/16
  * description    :
@@ -20,18 +19,20 @@ import java.util.List;
  */
 @Entity
 @Getter @Setter
-public class Member {
+public class OrderItem {
 
     @Id @GeneratedValue
-    @Column(name = "member_id")
+    @Column(name = "order_item_id")
     private Long id;
 
-    private String name;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_id")
+    private Item item;
 
-    @Embedded
-    private Address address;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id")
+    private Order order;
 
-    @OneToMany(mappedBy = "member")
-    private List<Order> orders = new ArrayList<>();
-
+    private int orderPrice; // 주문 가격
+    private int count;      // 주문 수량
 }
