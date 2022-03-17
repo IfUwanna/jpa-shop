@@ -11,6 +11,6 @@ package com.jpabook.jpashop.domain;
  * -----------------------------------------------------------
  * 2022/03/16        Jihun Park       최초 생성
  */
-public enum DeleveryStatus {
-
+public enum DeliveryStatus {
+    READY, COMP
 }

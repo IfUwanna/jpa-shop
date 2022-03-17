@@ -18,7 +18,7 @@ import javax.persistence.*;
  */
 @Entity
 @Getter @Setter
-public class Delevery {
+public class Delivery {
 
     @Id @GeneratedValue
     @Column(name = "delivery_id")
@@ -31,5 +31,5 @@ public class Delevery {
     private Address address;
 
     @Enumerated(EnumType.STRING)
-    private DeleveryStatus deleveryStatus;
+    private DeliveryStatus status;
 }
