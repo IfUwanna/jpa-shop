@@ -28,6 +28,20 @@ dependencies {
     runtimeOnly 'com.h2database:h2:1.4.199'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    // QueryDSL
+    implementation "com.querydsl:querydsl-jpa"
+    annotationProcessor(
+            "javax.persistence:javax.persistence-api",
+            "javax.annotation:javax.annotation-api",
+            "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jpa")
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ["$projectDir/src/main/java", "$projectDir/build/generated"]
+        }
+    }
 }
 
 tasks.named('test') {

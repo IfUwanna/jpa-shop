@@ -8,12 +8,15 @@ import com.jpabook.jpashop.domain.item.Book;
 import com.jpabook.jpashop.domain.item.Item;
 import com.jpabook.jpashop.exception.NotEnoughStockException;
 import com.jpabook.jpashop.repository.OrderRepository;
+import com.jpabook.jpashop.repository.OrderSearch;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -42,7 +45,7 @@ class OrderServiceTest {
     @Test
     public void 상품주문() throws Exception{
         //given
-        Member member = createMember();
+        Member member = createMember("회원1");
 
         Book book = createBook("시골 JPA", 10000, 10);
 
@@ -65,7 +68,7 @@ class OrderServiceTest {
     @Test
     public void 상품주문_재고수량초과() throws Exception{
         //given
-        Member member = createMember();
+        Member member = createMember("회원1");
         Item item = createBook("시골 JPA", 10000, 10);
 
         int orderCount = 11;
@@ -81,7 +84,7 @@ class OrderServiceTest {
     @Test
     public void 주문취소() throws Exception{
         //given
-        Member member = createMember();
+        Member member = createMember("회원1");
         Book book = createBook("시골 JPA", 10000, 10);
         int orderCount = 2;
         Long orderId = orderService.order(member.getId(), book.getId(), 2);
@@ -97,10 +100,34 @@ class OrderServiceTest {
 
     }
 
+    @Test
+    public void 주문전체조회() throws Exception{
+        //given
+        Member member = createMember("회원1");
+        Book book1 = createBook("시골 JPA1", 10000, 10);
+        Book book2 = createBook("시골 JPA2", 10000, 10);
+        Book book3 = createBook("시골 JPA3", 10000, 10);
 
-    private Member createMember() {
+        orderService.order(member.getId(), book1.getId(), 2);
+        orderService.order(member.getId(), book2.getId(), 2);
+        orderService.order(member.getId(), book3.getId(), 2);
+
+        OrderSearch orderSearch = new OrderSearch();
+        orderSearch.setOrderStatus(OrderStatus.ORDER);
+        orderSearch.setMemberName(member.getName());
+
+        //when
+        List<Order> orders = orderService.findOrders(orderSearch);
+
+        //then
+        assertEquals(3, orders.size(),"총 주문은 3건");
+
+    }
+
+
+    private Member createMember(String name) {
         Member member = new Member();
-        member.setName("회원1");
+        member.setName(name);
         member.setAddress(new Address("서울", "강가", "123-123"));
         em.persist(member);
         return member;
