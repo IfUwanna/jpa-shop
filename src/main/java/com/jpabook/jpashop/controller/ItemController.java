@@ -2,8 +2,9 @@ package com.jpabook.jpashop.controller;
 
 import com.jpabook.jpashop.domain.item.Book;
 import com.jpabook.jpashop.domain.item.Item;
+import com.jpabook.jpashop.form.BookForm;
 import com.jpabook.jpashop.service.ItemService;
-import com.jpabook.jpashop.service.UpdateItemDto;
+import com.jpabook.jpashop.dto.UpdateItemDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
