@@ -127,4 +127,14 @@ public class OrderRepository {
         return query.getResultList();
     }
 
+    //간단한 회원조회 v3 fetch join 예제
+    public List<Order> findAllWithMemberDelivery() {
+        return em.createQuery(
+                "select o from Order o " +
+                        " join fetch o.member m" +
+                        " join fetch o.delivery d", Order.class
+        ).getResultList();
+    }
+
+
 }
