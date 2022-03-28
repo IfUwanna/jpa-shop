@@ -128,7 +128,7 @@ public class OrderRepository {
         return query.getResultList();
     }
 
-    //간단한 회원조회 v3 fetch join 예제
+    //간단한 회원조회V3 fetch join 예제
     public List<Order> findAllWithMemberDelivery() {
         return em.createQuery(
                 "select o from Order o " +
@@ -136,6 +136,29 @@ public class OrderRepository {
                         " join fetch o.delivery d", Order.class
         ).getResultList();
     }
+
+    // 회원조회V3 fetch join 예제
+    public List<Order> findAllWithItem() {
+        return em.createQuery(
+        "select distinct o from Order o " +
+                " join fetch o.member m" +
+                " join fetch o.delivery d" +
+                " join fetch o.orderItems oi" +  // 1:N 페치조인!
+                " join fetch oi.item i", Order.class
+        ).setFirstResult(0).setMaxResults(100)   // WARN!!! firstResult/maxResults specified with collection fetch; applying in memory!
+        .getResultList();
+    }
+    // 회원조회V3.1 fetch join 예제
+    public List<Order> findAllWithMemberDelivery(int offset, int limit) {
+        return em.createQuery(
+        "select o from Order o" +
+                " join fetch o.member m" +
+                " join fetch o.delivery d", Order.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
+    }
+
 
 
 
