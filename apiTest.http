@@ -1,4 +1,4 @@
-###
+### 회원등록
 POST http://localhost:8080/api/v2/members
 Content-Type: application/json
 
@@ -6,10 +6,14 @@ Content-Type: application/json
   "name": "hello3"
 }
 
-###
+### 회원 수정
 PUT http://localhost:8080/api/v2/members/1
 Content-Type: application/json
 
 {
   "name": "new-hello"
 }
+
+### 회원조회
+GET http://localhost:8080/api/v2/members
+Content-Type: application/json
