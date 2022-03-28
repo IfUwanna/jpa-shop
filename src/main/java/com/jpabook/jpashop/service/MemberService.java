@@ -56,4 +56,10 @@ public class MemberService {
         return memberRepository.findOne(memberId);
     }
 
+    @Transactional
+    public void update(Long id, String name) {
+        //DB에서 꺼내서 1차캐시올리고 영속화해주고 @Transactional scope가 종료되면  관련 AOP가 끝나면서 트랜잭션 커밋이 되는 시점에 영속성 컨텍스트 flush()하면서 변경감지를 통해  db에 업데이트 쿼리가 나감
+        Member member = memberRepository.findOne(id);
+        member.setName(name);
+    }
 }
