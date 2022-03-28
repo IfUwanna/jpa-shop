@@ -2,6 +2,7 @@ package com.jpabook.jpashop.repository;
 
 import com.jpabook.jpashop.domain.*;
 import com.jpabook.jpashop.domain.Order;
+import com.jpabook.jpashop.dto.OrderSimpleQueryDto;
 import com.querydsl.core.Query;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -135,6 +136,7 @@ public class OrderRepository {
                         " join fetch o.delivery d", Order.class
         ).getResultList();
     }
+
 
 
 }
