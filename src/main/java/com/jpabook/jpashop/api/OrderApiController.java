@@ -15,8 +15,10 @@ package com.jpabook.jpashop.api;
 import com.jpabook.jpashop.domain.Order;
 import com.jpabook.jpashop.dto.OrderDto;
 import com.jpabook.jpashop.domain.OrderItem;
+import com.jpabook.jpashop.dto.OrderQueryDto;
 import com.jpabook.jpashop.repository.OrderRepository;
 import com.jpabook.jpashop.repository.OrderSearch;
+import com.jpabook.jpashop.repository.query.OrderQueryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,6 +50,7 @@ import static java.util.stream.Collectors.toList;
 public class OrderApiController {
 
     private final OrderRepository orderRepository;
+    private final OrderQueryRepository orderQueryRepository;
 
     /**
      * V1. 엔티티 직접 노출
@@ -98,5 +101,12 @@ public class OrderApiController {
                 .collect(toList());
         return result;
     }
+
+    @GetMapping("/api/v4/orders")
+    public List<OrderQueryDto> ordersV4() {
+        return orderQueryRepository.findOrderQueryDtos();
+    }
+
+
 }
 
