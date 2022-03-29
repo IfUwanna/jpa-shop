@@ -19,7 +19,7 @@ import com.jpabook.jpashop.dto.OrderFlatDto;
 import com.jpabook.jpashop.dto.OrderItemQueryDto;
 import com.jpabook.jpashop.dto.OrderQueryDto;
 import com.jpabook.jpashop.repository.OrderRepository;
-import com.jpabook.jpashop.repository.OrderSearch;
+import com.jpabook.jpashop.form.OrderSearch;
 import com.jpabook.jpashop.repository.query.OrderQueryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.*;
 import static java.util.stream.Collectors.groupingBy;

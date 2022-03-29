@@ -3,7 +3,7 @@ package com.jpabook.jpashop.controller;
 import com.jpabook.jpashop.domain.Member;
 import com.jpabook.jpashop.domain.Order;
 import com.jpabook.jpashop.domain.item.Item;
-import com.jpabook.jpashop.repository.OrderSearch;
+import com.jpabook.jpashop.form.OrderSearch;
 import com.jpabook.jpashop.service.ItemService;
 import com.jpabook.jpashop.service.MemberService;
 import com.jpabook.jpashop.service.OrderService;

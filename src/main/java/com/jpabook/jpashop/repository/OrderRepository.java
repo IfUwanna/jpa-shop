@@ -2,8 +2,7 @@ package com.jpabook.jpashop.repository;
 
 import com.jpabook.jpashop.domain.*;
 import com.jpabook.jpashop.domain.Order;
-import com.jpabook.jpashop.dto.OrderSimpleQueryDto;
-import com.querydsl.core.Query;
+import com.jpabook.jpashop.form.OrderSearch;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import lombok.RequiredArgsConstructor;
@@ -148,7 +147,7 @@ public class OrderRepository {
         ).setFirstResult(0).setMaxResults(100)   // WARN!!! firstResult/maxResults specified with collection fetch; applying in memory!
         .getResultList();
     }
-    // 회원조회V3.1 fetch join 예제
+    // 회원조회V3.1 fetch join + 페이징 예제
     public List<Order> findAllWithMemberDelivery(int offset, int limit) {
         return em.createQuery(
         "select o from Order o" +
