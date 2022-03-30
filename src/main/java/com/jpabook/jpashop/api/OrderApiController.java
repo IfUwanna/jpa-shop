@@ -21,6 +21,7 @@ import com.jpabook.jpashop.dto.OrderQueryDto;
 import com.jpabook.jpashop.repository.OrderRepository;
 import com.jpabook.jpashop.form.OrderSearch;
 import com.jpabook.jpashop.repository.query.OrderQueryRepository;
+import com.jpabook.jpashop.service.query.OrderQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -54,6 +55,7 @@ import static java.util.stream.Collectors.toList;
 public class OrderApiController {
 
     private final OrderRepository orderRepository;
+    private final OrderQueryService orderQueryService;
     private final OrderQueryRepository orderQueryRepository;
 
     /**
@@ -87,7 +89,8 @@ public class OrderApiController {
         List<OrderDto> result = orders.stream()
                 .map(o -> new OrderDto(o))
                 .collect(toList());
-        return result;
+       return result;
+//        return orderQueryService.ordersV3(); //OSIV를 위해 service에서 lazyloading 처리
     }
 
     /**
