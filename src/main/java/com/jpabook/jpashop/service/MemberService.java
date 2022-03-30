@@ -1,13 +1,11 @@
 package com.jpabook.jpashop.service;
 
 import com.jpabook.jpashop.domain.Member;
-import com.jpabook.jpashop.repository.MemberRepository;
-import lombok.AllArgsConstructor;
+import com.jpabook.jpashop.repository.MemberRepositoryOld;
+import com.jpabook.jpashop.repository.query.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.util.List;
 
@@ -53,13 +51,15 @@ public class MemberService {
     }
 
     public Member findOne(Long memberId){
-        return memberRepository.findOne(memberId);
+        //return memberRepository.findOne(memberId);
+        return memberRepository.findById(memberId).get();
     }
 
     @Transactional
     public void update(Long id, String name) {
         //DB에서 꺼내서 1차캐시올리고 영속화해주고 @Transactional scope가 종료되면  관련 AOP가 끝나면서 트랜잭션 커밋이 되는 시점에 영속성 컨텍스트 flush()하면서 변경감지를 통해  db에 업데이트 쿼리가 나감
-        Member member = memberRepository.findOne(id);
+        //Member member = memberRepository.findOne(id);
+        Member member = memberRepository.findById(id).get();
         member.setName(name);
     }
 }

@@ -1,15 +1,12 @@
 package com.jpabook.jpashop.service;
 
 import com.jpabook.jpashop.domain.Member;
-import com.jpabook.jpashop.repository.MemberRepository;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
+import com.jpabook.jpashop.repository.MemberRepositoryOld;
+import com.jpabook.jpashop.repository.query.MemberRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.*;
@@ -46,7 +43,8 @@ class MemberServiceTest {
         Long savedId = memberService.join(member);
 
         //then
-        assertThat(member).isEqualTo(memberRepository.findOne(savedId));
+        //assertThat(member).isEqualTo(memberRepository.findOne(savedId));
+        assertThat(member).isEqualTo(memberRepository.findById(savedId).get());
     }
 
     @Test
