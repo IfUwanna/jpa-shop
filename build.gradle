@@ -38,13 +38,17 @@ dependencies {
             "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jpa")
 }
 
+
+def querydslDir = "$buildDir/querydsl"
+
 sourceSets {
     main {
         java {
-            srcDirs = ["$projectDir/src/main/java", "$projectDir/build/generated"]
+            srcDirs = ["$projectDir/src/main/java", querydslDir]
         }
     }
 }
+
 
 tasks.named('test') {
     useJUnitPlatform()

@@ -5,6 +5,7 @@ import com.jpabook.jpashop.domain.Order;
 import com.jpabook.jpashop.form.OrderSearch;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
@@ -14,6 +15,9 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.jpabook.jpashop.domain.QMember.*;
+import static com.jpabook.jpashop.domain.QOrder.*;
 
 /**
  * packageName    : com.jpabook.jpashop.repository
@@ -27,10 +31,17 @@ import java.util.List;
  * 2022/03/18        Jihun Park       최초 생성
  */
 @Repository
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class OrderRepository {
 
     private final EntityManager em;
+    private final JPAQueryFactory query;
+
+    public OrderRepository(EntityManager em) {
+        this.em = em;
+        this.query = new JPAQueryFactory(em);
+    }
+
 
     public void save(Order order){
         em.persist(order);
@@ -40,16 +51,15 @@ public class OrderRepository {
         return em.find(Order.class,id);
     }
 
+    //QueryDSL 사용하여 만듦
     public List<Order> findAll(OrderSearch orderSearch) {
-
-        JPAQuery<Order> query = new JPAQuery<>(em);
-
-        QOrder order = QOrder.order;
-        QMember member = QMember.member;
+//        JPAQuery<Order> query  =new JPAQuery(em);
+//        QOrder order = QOrder.order;
+//        QMember member = QMember.member; static import로 줄임
         return query
                 .select(order)
                 .from(order)
-                .join(order.member,member)
+                .join(order.member, member)
                 .where(statusEq(orderSearch.getOrderStatus())
                         ,nameLike(orderSearch.getMemberName())
                 )
